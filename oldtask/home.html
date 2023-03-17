@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="home.js"></script>
+  </head>
+  <body>
+    <div>
+      <form id="employeeForm" onsubmit="addEmployee(event)">
+        <input id="employeeId" type="hidden" />
+
+        <label for="name">Name : </label>
+        <input id="name" name="name" type="text" />
+        <span id="nameError"></span><br />
+
+        <label for="gender">Gender : </label>
+        <input id="gender1" name="gender" type="radio" value="male" checked />
+        Male
+        <input id="gender2" name="gender" type="radio" value="Female" />
+        Female<br />
+
+        <label for="dateofbirth">Date of Birth : </label>
+        <input id="dateofbirth" name="dateofbirth" type="date" />
+        <span id="dateofbirthError"></span><br />
+
+        <label for="email">Email : </label>
+        <input id="email" name="email" type="text" />
+        <span id="emailError"></span><br />
+
+        <label for="phone">Phone : </label>
+        <input id="phone" name="phone" type="text" />
+        <span id="phoneError"></span><br />
+
+        <label for="hobbies">Hobbies : </label>
+        <input id="hobbie1" name="hobbies" type="checkbox" value="Chess" />Chess
+        <input
+          id="hobbie2"
+          name="hobbies"
+          type="checkbox"
+          value="Cricket"
+        />Cricket
+        <input
+          id="hobbie3"
+          name="hobbies"
+          type="checkbox"
+          value="Travel"
+        />Travel
+        <input id="hobbie4" name="hobbies" type="checkbox" value="Music" />Music
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <br />
+    <br />
+    <table id="horizontalTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Date Of Birth</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Hobbies</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <br />
+    <br />
+
+    <table id="verticalTable">
+      <tr id="nameRow">
+        <th>Name</th>
+      </tr>
+      <tr id="genderRow">
+        <th>Gender</th>
+      </tr>
+      <tr id="dobRow">
+        <th>Date of Birth</th>
+      </tr>
+      <tr id="emailRow">
+        <th>Email</th>
+      </tr>
+      <tr id="phoneRow">
+        <th>Phone</th>
+      </tr>
+      <tr id="hobbiesRow">
+        <th>Hobbies</th>
+      </tr>
+      <tr id="actionRow">
+        <th>action</th>
+      </tr>
+    </table>
+  </body>
+</html>
