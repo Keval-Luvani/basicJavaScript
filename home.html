@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      label {
+        display: inline-block;
+        width: 100px;
+      }
+      div {
+        margin-right: 20px;
+      }
+      td {
+        min-width: 120px;
+        text-align: left;
+      }
+      th {
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <form onsubmit="addEmployee()">
+        <input id="employeeId" type="hidden" />
+
+        <label for="name">Name : </label>
+        <input id="name" name="name" type="text" />
+        <span id="nameError" style="color: red"></span><br />
+
+        <label for="gender">Gender : </label>
+        <input id="g1" name="gender" type="radio" value="male" checked />
+        Male
+        <input id="g2" name="gender" type="radio" value="Female" />
+        Female<br />
+
+        <label for="dob">Date of Birth : </label>
+        <input id="dob" name="dob" type="date" />
+        <span id="dobError" style="color: red"></span><br />
+
+        <label for="email">Email : </label>
+        <input id="email" name="email" type="text" />
+        <span id="emailError" style="color: red"></span><br />
+
+        <label for="phone">Phone : </label>
+        <input id="phone" name="phone" type="text" />
+        <span id="phoneError" style="color: red"></span><br />
+
+        <label for="hobbies">Hobbies : </label>
+        <input id="h1" name="hobbies" type="checkbox" value="Chess" />Chess
+        <input id="h2" name="hobbies" type="checkbox" value="Cricket" />Cricket
+        <input id="h3" name="hobbies" type="checkbox" value="Travel" />Travel
+        <input id="h4" name="hobbies" type="checkbox" value="Music" />Music
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <br />
+    <br />
+    <table style="border: 2px solid black">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Date Of Birth</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Hobbies</th>
+          <th>action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <br />
+    <br />
+    <table style="border: 2px solid black">
+      <tr id="nameRow">
+        <th>Name</th>
+      </tr>
+      <tr id="genderRow">
+        <th>Gender</th>
+      </tr>
+      <tr id="dobRow">
+        <th>Date of Birth</th>
+      </tr>
+      <tr id="emailRow">
+        <th>Email</th>
+      </tr>
+      <tr id="phoneRow">
+        <th>Phone</th>
+      </tr>
+      <tr id="hobbiesRow">
+        <th>Hobbies</th>
+      </tr>
+      <tr id="actionRow">
+        <th>action</th>
+      </tr>
+    </table>
+
+    <script>
+      window.onload = function () {
+        let employeeList = JSON.parse(localStorage.getItem("employeeList"));
+        addRows(employeeList);
+        addColumns(employeeList);
+      };
+      function addEmployee() {
+        event.preventDefault();
+        var employeeId = document.getElementById("employeeId").value;
+        console.log(typeof employeeId);
+        console.log("employeeId" + employeeId);
+        var name = document.getElementById("name").value;
+        if (document.getElementById("g1").checked) {
+          var gender = "male";
+        } else {
+          var gender = "female";
+        }
+        var dob = document.getElementById("dob").value;
+        var email = document.getElementById("email").value;
+        var phone = document.getElementById("phone").value;
+        var hobbies = getHobbies();
+        var employee = getObject(name, gender, dob, email, phone, hobbies);
+
+        if (formValidation(employee, employeeId)) {
+          var employeeList = JSON.parse(localStorage.getItem("employeeList"));
+
+          if (!employeeId == "") {
+            employeeList[employeeId] = employee;
+            localStorage.setItem("employeeList", JSON.stringify(employeeList));
+            window.location.reload(true);
+            return;
+          }
+
+          employeeList.push(employee);
+          localStorage.setItem("employeeList", JSON.stringify(employeeList));
+          window.location.reload(true);
+        }
+      }
+
+      function getHobbies() {
+        var h1 = document.getElementById("h1");
+        var h2 = document.getElementById("h2");
+        var h3 = document.getElementById("h3");
+        var h4 = document.getElementById("h4");
+        var result = " ";
+        if (h1.checked) {
+          result = h1.value + " ";
+        }
+        if (h2.checked) {
+          result = result + " " + h2.value;
+        }
+        if (h3.checked) {
+          result = result + " " + h3.value;
+        }
+        if (h4.checked) {
+          result = result + " " + h4.value;
+        }
+        return result;
+      }
+
+      function setHobbies(hobbies) {
+        var h1 = document.getElementById("h1");
+        var h2 = document.getElementById("h2");
+        var h3 = document.getElementById("h3");
+        var h4 = document.getElementById("h4");
+        h1.checked = false;
+        h2.checked = false;
+        h3.checked = false;
+        h4.checked = false;
+        var result = " ";
+        if (hobbies.includes(h1.value)) {
+          h1.checked = true;
+        }
+        if (hobbies.includes(h2.value)) {
+          h2.checked = true;
+        }
+        if (hobbies.includes(h3.value)) {
+          h3.checked = true;
+        }
+        if (hobbies.includes(h4.value)) {
+          h4.checked = true;
+        }
+      }
+
+      function getObject(name, gender, dob, email, phone, hobbies) {
+        const employee = {
+          name: name,
+          gender: gender,
+          dob: dob,
+          email: email,
+          phone: phone,
+          hobbies: hobbies,
+        };
+        return employee;
+      }
+      function addRows(employeeList) {
+        var tbody = document.querySelector("tbody");
+        var employeeId = 0;
+        for (var employee of employeeList) {
+          var row = tbody.insertRow();
+          row.insertCell().innerHTML = employee.name;
+          row.insertCell().innerHTML = employee.gender;
+          row.insertCell().innerHTML = employee.dob;
+          row.insertCell().innerHTML = employee.email;
+          row.insertCell().innerHTML = employee.phone;
+          row.insertCell().innerHTML = employee.hobbies;
+          row.insertCell().innerHTML = getActions(employeeId++);
+        }
+      }
+      function addColumns(employeeList) {
+        var nameRow = document.getElementById("nameRow");
+        var genderRow = document.getElementById("genderRow");
+        var dobRow = document.getElementById("dobRow");
+        var emailRow = document.getElementById("emailRow");
+        var phoneRow = document.getElementById("phoneRow");
+        var hobbiesRow = document.getElementById("hobbiesRow");
+        var actionRow = document.getElementById("actionRow");
+        var employeeId = 0;
+        for (var employee of employeeList) {
+          nameRow.insertCell().innerHTML = employee.name;
+          genderRow.insertCell().innerHTML = employee.gender;
+          dobRow.insertCell().innerHTML = employee.dob;
+          emailRow.insertCell().innerHTML = employee.email;
+          phoneRow.insertCell().innerHTML = employee.phone;
+          hobbiesRow.insertCell().innerHTML = employee.hobbies;
+          actionRow.insertCell().innerHTML = getActions(employeeId++);
+        }
+      }
+
+      function getActions(employeeId) {
+        var actions =
+          '<button onClick="updateEmployee(' +
+          employeeId +
+          ')">Update</button><button onClick="deleteEmployee(' +
+          employeeId +
+          ')">Delete</button>';
+        return actions;
+      }
+
+      function updateEmployee(employeeId) {
+        var employeeList = JSON.parse(localStorage.getItem("employeeList"));
+        var employee = employeeList[employeeId];
+        document.getElementById("employeeId").value = employeeId;
+        document.getElementById("name").value = employee.name;
+        if (employee.gender == "male") {
+          document.getElementById("g1").checked = true;
+        } else {
+          document.getElementById("g2").checked = true;
+        }
+
+        document.getElementById("dob").value = employee.dob;
+        document.getElementById("email").value = employee.email;
+        document.getElementById("phone").value = employee.phone;
+        setHobbies(employee.hobbies.split(" "));
+      }
+      function deleteEmployee(employeeId) {
+        var employeeList = JSON.parse(localStorage.getItem("employeeList"));
+        employeeList.splice(employeeId, 1);
+        localStorage.setItem("employeeList", JSON.stringify(employeeList));
+        window.location.reload(true);
+      }
+      function formValidation(employee, employeeId) {
+        var emailError = document.getElementById("emailError");
+        var dobError = document.getElementById("dobError");
+        var phoneError = document.getElementById("phoneError");
+        var nameError = document.getElementById("nameError");
+
+        emailError.innerText = "";
+        dobError.innerText = "";
+        phoneError.innerText = "";
+        nameError.innerText = "";
+        var valid = true;
+
+        if (employee.name == "") {
+          nameError.innerText = "required";
+          valid = false;
+        } else if (employee.name.length < 4 || employee.name.length > 20) {
+          console.log(employee.name.length);
+          nameError.innerText = "name length should be between 4 to 20";
+          valid = false;
+        }
+
+        if (employee.email == "") {
+          emailError.innerText = "required";
+          valid = false;
+        } else if (validateEmail(employee.email)) {
+          emailError.innerText = "Enter Valid Email";
+          valid = false;
+        }
+
+        if (employeeId == "") {
+          var employeeList = JSON.parse(localStorage.getItem("employeeList"));
+          for (var e of employeeList) {
+            if (e.email == employee.email) {
+              emailError.innerText = "user already exists";
+              valid = false;
+            }
+          }
+        }
+
+        if (employee.dob == "") {
+          dobError.innerText = "required";
+          valid = false;
+        } else if (new Date(employee.dob) > new Date()) {
+          dobError.innerText = "future date not allowed";
+          valid = false;
+        }
+
+        if (employee.phone != "") {
+          if (employee.phone.length != 10) {
+            phoneError.innerText = "Either enter 10 digit no or leave a blank";
+            valid = false;
+          } else if (employee.phone.charAt(0) == "0") {
+            phoneError.innerText = "phone number can not start with 0";
+            valid = false;
+          } else {
+            let i = 0;
+            while (i < 10) {
+              if (
+                !(
+                  employee.phone.charAt(i) >= "0" &&
+                  employee.phone.charAt(i) <= "9"
+                )
+              ) {
+                phoneError.innerText = "only numbers";
+                valid = false;
+                break;
+              }
+              i++;
+            }
+          }
+        }
+
+        return valid;
+      }
+
+      function validateEmail(email) {
+        var len = 0;
+        var i = 0;
+        var a = false;
+        var dot = false;
+        var valid = false;
+        while (i < email.length) {
+          if (email.charAt(i) == "@") {
+            a = true;
+            break;
+          }
+          i++;
+          len++;
+        }
+        if (!(len < 1) && a) {
+          return false;
+        }
+        len == 0;
+        while (i < email.length) {
+          if (email.charAt(i) == "@") {
+            return false;
+          }
+          if (email.charAt(i) == ".") {
+            dot = true;
+            break;
+          }
+          i++;
+          len++;
+        }
+        if (!(len < 1) && dot) {
+          return false;
+        }
+        len == 0;
+        while (i < email.length) {
+          if (email.charAt(i) == ".") {
+            return false;
+          }
+          i++;
+          len++;
+        }
+        if (len < 1) {
+          return false;
+        }
+        return true;
+      }
+    </script>
+  </body>
+</html>
