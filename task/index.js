@@ -1,20 +1,23 @@
-var totalEmployee = 0;
 var lastIndex = 0;
 var create = true;
+
 window.onload = function () {
   let employeeList = JSON.parse(localStorage.getItem("employeeList"));
-  totalEmployee = employeeList.length;
+  let totalEmployee = employeeList.length;
+
   if (totalEmployee != 0) {
     lastIndex = employeeList[totalEmployee - 1].id;
   }
 
+  let todayDate = new Date().toISOString().split("T")[0];
+  document.getElementById("dateofBirth").setAttribute("max", todayDate);
   addRows(employeeList);
   addColumns(employeeList);
 };
 
 function addEmployee(event) {
   event.preventDefault();
-
+  var employeeForm = document.getElementById("employeeForm");
   var id = document.getElementById("id").value;
   var name = document.getElementById("name").value;
   var gender = document.getElementById("genderMale").checked
@@ -28,6 +31,7 @@ function addEmployee(event) {
   if (id != "") {
     create = false;
   }
+
   var employee = getObject(
     id,
     name,
@@ -40,27 +44,24 @@ function addEmployee(event) {
 
   if (formValidation(employee)) {
     var employeeList = JSON.parse(localStorage.getItem("employeeList"));
-
     if (!create) {
-      console.log("updating...");
       let index = employeeList.findIndex((emp) => emp.id == employee.id);
-      console.log("updating... id" + index);
       employeeList[index] = employee;
       localStorage.setItem("employeeList", JSON.stringify(employeeList));
-      console.log(JSON.parse(localStorage.getItem("employeeList")));
       viewUpdateRow(employee);
       viewUpdateCoumn(employee);
       create = true;
+      employeeForm.reset();
       return;
     }
-
     employeeList.push(employee);
     localStorage.setItem("employeeList", JSON.stringify(employeeList));
     viewAddRow(employee);
     viewAddCoumn(employee);
-    console.log(JSON.parse(localStorage.getItem("employeeList")));
+    employeeForm.reset();
   }
 }
+
 function viewAddRow(employee) {
   var tbody = document.querySelector("tbody");
   var row = tbody.insertRow();
@@ -73,6 +74,7 @@ function viewAddRow(employee) {
   row.insertCell().innerHTML = employee.hobbies;
   row.insertCell().innerHTML = getActions(employee.id);
 }
+
 function viewAddCoumn(employee) {
   var nameCell = document.getElementById("nameRow").insertCell();
   var genderCell = document.getElementById("genderRow").insertCell();
@@ -96,11 +98,13 @@ function viewAddCoumn(employee) {
   actionCell.setAttribute("id", "action" + employee.id);
   actionCell.innerHTML = getActions(employee.id);
 }
+
 function viewDeleteRow(employeeId) {
   var row = document.getElementById("row" + employeeId);
   var parent = row.parentNode;
   parent.removeChild(row);
 }
+
 function viewDeleteColumn(employeeId) {
   var nameCell = document.getElementById("name" + employeeId);
   var genderCell = document.getElementById("gender" + employeeId);
@@ -117,6 +121,7 @@ function viewDeleteColumn(employeeId) {
   hobbiesCell.parentNode.removeChild(hobbiesCell);
   actionCell.parentNode.removeChild(actionCell);
 }
+
 function viewUpdateRow(employee) {
   var row = document.createElement("tr");
   row.setAttribute("id", "row" + employee.id);
@@ -130,6 +135,7 @@ function viewUpdateRow(employee) {
   var changedRow = document.getElementById("row" + employee.id);
   changedRow.replaceWith(row);
 }
+
 function viewUpdateCoumn(employee) {
   var employeeId = employee.id;
   document.getElementById("name" + employeeId).innerHTML = employee.name;
@@ -193,11 +199,11 @@ function addColumns(employeeList) {
 
 function getActions(employeeId) {
   var actions =
-    '<button class="updateButton" onClick="updateEmployee(' +
+    '<div class="actions"><button class="updateButton" onClick="updateEmployee(' +
     employeeId +
-    ')">Update</button><button onClick="deleteEmployee(' +
+    ')">Update</button><button class="deleteButton" onClick="deleteEmployee(' +
     employeeId +
-    ')">Delete</button>';
+    ')">Delete</button></div>';
   return actions;
 }
 
@@ -221,14 +227,13 @@ function updateEmployee(employeeId) {
 
 function deleteEmployee(employeeId) {
   var employeeList = JSON.parse(localStorage.getItem("employeeList"));
-  console.log("deleting...");
   let index = employeeList.findIndex((emp) => emp.id == employeeId);
-  console.log("deleting... id" + index);
   employeeList.splice(index, 1);
   localStorage.setItem("employeeList", JSON.stringify(employeeList));
   viewDeleteRow(employeeId);
   viewDeleteColumn(employeeId);
 }
+
 function getHobbies() {
   var hobbie1 = document.getElementById("hobbie1");
   var hobbie2 = document.getElementById("hobbie2");
@@ -304,17 +309,14 @@ function validateEmail(email) {
     len++;
   }
   if (!a) {
-    console.log("307");
     return false;
   }
   if (len < 1) {
-    console.log("311");
     return false;
   }
   len = 0;
   while (i < email.length) {
     if (email.charAt(i) == "@") {
-      console.log("317");
       return false;
     }
     if (email.charAt(i) == ".") {
@@ -326,24 +328,20 @@ function validateEmail(email) {
     len++;
   }
   if (!dot) {
-    console.log("328");
     return false;
   }
   if (len < 1) {
-    console.log("332");
     return false;
   }
   len = 0;
   while (i < email.length) {
     if (email.charAt(i) == ".") {
-      console.log("338");
       return false;
     }
     i++;
     len++;
   }
   if (len < 1) {
-    console.log("345");
     return false;
   }
   return valid;
@@ -365,7 +363,6 @@ function formValidation(employee, employeeId) {
     nameError.innerText = "required";
     valid = false;
   } else if (employee.name.length < 4 || employee.name.length > 20) {
-    console.log(employee.name.length);
     nameError.innerText = "name length should be between 4 to 20";
     valid = false;
   }

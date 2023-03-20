@@ -3,12 +3,8 @@ label {
     width: 100px;
 }
 
-div {
-    margin-right: 20px;
-}
-
 table {
-    border: 2px solid black;
+    border: 1px solid black;
     border-collapse: collapse;
 }
 
@@ -30,4 +26,97 @@ th {
 
 #nameError, #dateofBirthError, #emailError, #phoneError {
     color: red;
+}
+
+#formdiv {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    border: 2px solid darkcyan ;
+}
+#form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+#formheader {
+    height: fit-content;
+    font-size: 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: darkcyan;
+    color: white;
+}
+.forminput {
+    margin-bottom: 5px;
+}
+.actions {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.updateButton , .deleteButton {
+    background-color: darkcyan;
+    color: white;
+    font-size: 15px;
+    border-radius: 7px;
+    padding: 3px 8px;
+    border: none;
+}
+#submit-button{
+    display: flex;
+    justify-content: space-around;
+}
+#submit-button button {
+    background-color: darkcyan;
+    color: white;
+    font-size: 15px;
+    border-radius: 7px;
+    padding: 3px 8px;
+    border: none;
+}
+
+#horizontaltablediv {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    max-width: 100%;
+    border: 2px solid darkcyan;
+}
+#horizontaltable {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 10px 10px 10px;
+    overflow-x: scroll;
+}
+#horizontaltableheader {
+    height: fit-content;
+    font-size: 20px;
+    margin-bottom: 10px;
+    background-color: darkcyan;
+    color: white;
+}
+
+#verticaltablediv {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    max-width: 100%;
+    border: 2px solid darkcyan;  
+}
+#verticaltable {
+    display: flex;
+    flex-direction: row;
+    margin: 0px 10px 10px 10px;
+    overflow-x: scroll;  
+}
+#verticaltableheader {
+    height: fit-content;
+    font-size: 20px;
+    margin-bottom: 10px;
+    background-color: darkcyan;
+    color: white;
 }

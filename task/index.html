@@ -9,101 +9,145 @@
     <script src="index.js"></script>
   </head>
   <body>
-    <div>
-      <form id="employeeForm" onsubmit="addEmployee(event)">
-        <input id="id" type="hidden" />
+    <div id="formdiv">
+      <div id="formheader">AddEmployee</div>
+      <div id="form">
+        <form id="employeeForm" onsubmit="addEmployee(event)">
+          <div class="forminput">
+            <input id="id" name="id" style="display: none" />
+          </div>
+          <div class="forminput">
+            <label for="name">Name : </label>
+            <input id="name" name="name" type="text" />
+            <span id="nameError"></span>
+          </div>
 
-        <label for="name">Name : </label>
-        <input id="name" name="name" type="text" />
-        <span id="nameError"></span><br />
+          <div class="forminput">
+            <label for="gender">Gender : </label>
+            <input
+              id="genderMale"
+              name="gender"
+              type="radio"
+              value="male"
+              checked
+            />
+            Male
+            <input
+              id="genderFemale"
+              name="gender"
+              type="radio"
+              value="Female"
+            />
+            Female
+          </div>
+          <div class="forminput">
+            <label for="dateofBirth">Date of Birth : </label>
+            <input
+              id="dateofBirth"
+              name="dateofBirth"
+              max="todayDate()"
+              type="date"
+            />
+            <span id="dateofBirthError"></span>
+          </div>
 
-        <label for="gender">Gender : </label>
-        <input
-          id="genderMale"
-          name="gender"
-          type="radio"
-          value="male"
-          checked
-        />
-        Male
-        <input id="genderFemale" name="gender" type="radio" value="Female" />
-        Female<br />
+          <div class="forminput">
+            <label for="email">Email : </label>
+            <input id="email" name="email" type="text" />
+            <span id="emailError"></span>
+          </div>
 
-        <label for="dateofBirth">Date of Birth : </label>
-        <input id="dateofBirth" name="dateofBirth" type="date" />
-        <span id="dateofBirthError"></span><br />
+          <div class="forminput">
+            <label for="phone">Phone : </label>
+            <input id="phone" name="phone" type="text" />
+            <span id="phoneError"></span>
+          </div>
 
-        <label for="email">Email : </label>
-        <input id="email" name="email" type="text" />
-        <span id="emailError"></span><br />
-
-        <label for="phone">Phone : </label>
-        <input id="phone" name="phone" type="text" />
-        <span id="phoneError"></span><br />
-
-        <label for="hobbies">Hobbies : </label>
-        <input id="hobbie1" name="hobbies" type="checkbox" value="Chess" />Chess
-        <input
-          id="hobbie2"
-          name="hobbies"
-          type="checkbox"
-          value="Cricket"
-        />Cricket
-        <input
-          id="hobbie3"
-          name="hobbies"
-          type="checkbox"
-          value="Travel"
-        />Travel
-        <input id="hobbie4" name="hobbies" type="checkbox" value="Music" />Music
-        <br />
-        <button type="submit">Submit</button>
-      </form>
+          <div class="forminput">
+            <label for="hobbies">Hobbies : </label>
+            <input
+              id="hobbie1"
+              name="hobbies"
+              type="checkbox"
+              value="Chess"
+            />Chess
+            <input
+              id="hobbie2"
+              name="hobbies"
+              type="checkbox"
+              value="Cricket"
+            />Cricket
+            <input
+              id="hobbie3"
+              name="hobbies"
+              type="checkbox"
+              value="Travel"
+            />Travel
+            <input
+              id="hobbie4"
+              name="hobbies"
+              type="checkbox"
+              value="Music"
+            />Music
+          </div>
+          <div id="submit-button">
+            <button type="submit">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <br />
     <br />
-
-    <table id="horizontalTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Gender</th>
-          <th>Date Of Birth</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Hobbies</th>
-          <th>action</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div id="horizontaltablediv">
+      <div id="horizontaltableheader">Display</div>
+      <div id="horizontaltable">
+        <table id="horizontalTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Gender</th>
+              <th>Date Of Birth</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Hobbies</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
     <br />
     <br />
-
-    <table id="verticalTable">
-      <tr id="nameRow">
-        <th>Name</th>
-      </tr>
-      <tr id="genderRow">
-        <th>Gender</th>
-      </tr>
-      <tr id="dateofBirthRow">
-        <th>Date of Birth</th>
-      </tr>
-      <tr id="emailRow">
-        <th>Email</th>
-      </tr>
-      <tr id="phoneRow">
-        <th>Phone</th>
-      </tr>
-      <tr id="hobbiesRow">
-        <th>Hobbies</th>
-      </tr>
-      <tr id="actionRow">
-        <th>action</th>
-      </tr>
-    </table>
+    <div id="verticaltablediv">
+      <div id="verticaltableheader">Display</div>
+      <div id="verticaltable">
+        <table id="verticalTable">
+          <tr id="nameRow">
+            <th>Name</th>
+          </tr>
+          <tr id="genderRow">
+            <th>Gender</th>
+          </tr>
+          <tr id="dateofBirthRow">
+            <th>Date of Birth</th>
+          </tr>
+          <tr id="emailRow">
+            <th>Email</th>
+          </tr>
+          <tr id="phoneRow">
+            <th>Phone</th>
+          </tr>
+          <tr id="hobbiesRow">
+            <th>Hobbies</th>
+          </tr>
+          <tr id="actionRow">
+            <th>action</th>
+          </tr>
+        </table>
+      </div>
+    </div>
   </body>
 </html>
